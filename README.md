@@ -1,5 +1,99 @@
 # WebSocket-Go
 
+Small Go practice project for learning WebSocket basics.
+
+This project contains a simple chat:
+- a Go HTTP server serves the HTML page
+- the client connects via WebSocket
+- messages are broadcast to all connected clients
+- the server adds the sender IP address and time to each message
+
+## Stack
+
+- Go
+- Gorilla WebSocket
+- Zap logger
+- HTML + Bootstrap
+
+## Project structure
+
+- [cmd/server/main.go](d:\prog\pet-projects\WebSocket-Go\cmd\server\main.go) - entry point
+- [internal/wsserver/server.go](d:\prog\pet-projects\WebSocket-Go\internal\wsserver\server.go) - HTTP and WebSocket server
+- [internal/wsserver/dto.go](d:\prog\pet-projects\WebSocket-Go\internal\wsserver\dto.go) - WebSocket message DTO
+- [internal/web/templates/html/index.html](d:\prog\pet-projects\WebSocket-Go\internal\web\templates\html\index.html) - chat client page
+
+## Run
+
+```bash
+go run ./cmd/server
+```
+
+After startup the app is available at:
+
+```txt
+http://localhost:8080
+```
+
+Test endpoint:
+
+```txt
+http://localhost:8080/test
+```
+
+## Message flow
+
+The client sends JSON:
+
+```json
+{
+  "message": "hello"
+}
+```
+
+The server enriches the message and broadcasts JSON like this:
+
+```json
+{
+  "address": "192.168.0.5",
+  "message": "hello",
+  "time": "15:04"
+}
+```
+
+## Testing From Phone
+
+If you want to open the chat from your phone:
+
+1. Run the server on Windows.
+2. Connect both the phone and the computer to the same Wi-Fi network.
+3. Open this in the phone browser:
+
+```txt
+http://<your_computer_ip>:8080
+```
+
+The page will use this WebSocket endpoint:
+
+```txt
+ws://<your_computer_ip>:8080/ws
+```
+
+Example:
+
+```txt
+http://192.168.0.5:8080
+```
+
+## Purpose
+
+This project is for practicing:
+- WebSocket connections
+- goroutines and channels
+- message broadcasting
+- graceful server shutdown
+
+---
+
 Небольшой учебный проект на Go для практики с WebSocket.
 
 Здесь реализован простой чат:
